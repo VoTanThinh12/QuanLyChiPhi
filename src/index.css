@@ -1,0 +1,31 @@
+@import url("https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,500;1,14..32,500&family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap");
+
+body,
+html {
+  font-family: "Open-Sans", sans-serif;
+  font-size: 1em;
+}
+.card {
+  margin: 0 10%;
+}
+.app-primary-color {
+  color: #79589f;
+}
+nav,
+.app-primary-bg-color {
+  background-color: #79589f;
+}
+.card-body {
+  padding: 0 !important ;
+}
+.border-bottom-1 {
+  border-bottom: 1px solid lightgray;
+}
+.card-subtitle {
+  margin-top: 1rem;
+}
+.navbar-nav .nav-link,
+.navbar-toggler {
+  color: white;
+  border-color: white;
+}
