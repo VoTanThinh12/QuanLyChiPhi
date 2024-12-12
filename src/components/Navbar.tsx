@@ -1,33 +1,37 @@
 import { FaBars } from "react-icons/fa";
 import Logo from "./Logo";
+import { NavLink } from "react-router-dom";
 
 const Navbar = () => {
   return (
     <nav className="navbar navbar-expand-lg">
       <div className="container">
-        <Logo />  
+        <Logo />
         <div className="collapse navbar-collapse" id="navbarNav">
           <div className="navbar-nav">
-            <a className="nav-link active" aria-current="page" href="#">
-              Home
-            </a>
+            <NavLink className="nav-link " to="/">
+              Dashboard
+            </NavLink>
 
-            <a className="nav-link" href="#t">
-              Features
-            </a>
+            <NavLink className="nav-link" to="/new">
+              New Expense
+            </NavLink>
 
-            <a className="nav-link" href="#1">
-              Pricing
-            </a>
-
-            <a className="nav-link " aria-disabled="true">
-              Disabled
-            </a>
+            <NavLink className="nav-link" to="/reports">
+              Report
+            </NavLink>
           </div>
         </div>
         <div className="d-flex" role="search">
-          <div className="btn btn-sm btn-outline-light">Login</div>
-          <div className="btn btn-sm btn-outline-light mx-1">Logout</div>
+          <NavLink className="btn btn-sm btn-outline-light" to="/login">
+            Login
+          </NavLink>
+          <NavLink
+            className="btn btn-sm btn-outline-light mx-1 "
+            to="/register"
+          >
+            Register
+          </NavLink>
           <button
             className="navbar-toggler"
             type="button"
