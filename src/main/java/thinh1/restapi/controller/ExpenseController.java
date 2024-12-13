@@ -5,6 +5,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 import thinh1.restapi.dto.ExpenseDTO;
 import thinh1.restapi.io.ExpenseResponse;
@@ -42,6 +43,22 @@ public class ExpenseController {
         return responses;
 
     }
+
+
+    @GetMapping("/expenses/{expenseId}")
+    public ExpenseResponse getExpenseById(@PathVariable String expenseId) {
+        log.info("API GET /expenses/{expenseId} called");
+        ExpenseDTO expenseDTO = expenseService.getExpenseByExpenseId(expenseId);
+        return mapToExpenseResponse(expenseDTO);
+    }
+
+
+
+
+
+
+
+
     /*
      *phuong thuc mapper de chuyen expense dto sang expense response
      */

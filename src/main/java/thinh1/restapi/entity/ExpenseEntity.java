@@ -20,8 +20,11 @@ public class ExpenseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
     @Column(unique=true)
     private String expenseId;
+
+
     private String name;
     private String note;
     private String description;

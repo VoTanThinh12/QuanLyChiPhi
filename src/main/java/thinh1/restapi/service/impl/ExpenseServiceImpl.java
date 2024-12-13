@@ -30,6 +30,15 @@ public class ExpenseServiceImpl implements ExpenseService {
         return listOfExpenses;
     }
 
+    @Override
+    public ExpenseDTO getExpenseByExpenseId(String expenseId) {
+        ExpenseEntity optionalExpense = expenseReponsitory.findByExpenseId(expenseId)
+        .orElseThrow(() -> new RuntimeException("Expense not found for the expense id " + expenseId));
+
+        return mapToExpenseDTO(optionalExpense);
+    }
+
+
     private ExpenseDTO mapToExpenseDTO(ExpenseEntity expenseEntity) {
         return modelMapper.map(expenseEntity, ExpenseDTO.class);
     }
