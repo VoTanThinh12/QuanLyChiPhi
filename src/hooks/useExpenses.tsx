@@ -2,10 +2,10 @@ import { useState, useEffect } from "react";
 import { getExpenses } from "../services/expense-service";
 import { Expense } from "../model/Expense";
 
-const useExpenses = () => {
+const useExpenses = (expenseId: string) => {
   const [expenses, setExpenses] = useState<Expense[]>([]);
-  const [error, setErrors] = useState(null);
-  const [isLoading, setLoader] = useState(false);
+  const [error, setErrors] = useState<string>("");
+  const [isLoading, setLoader] = useState<boolean>(false) ;
 
   useEffect(() => {
     setLoader(true);
