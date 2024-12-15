@@ -2,6 +2,7 @@ import { Link } from "react-router-dom";
 import { Expense } from "../model/Expense";
 import CurrencyUtils from "../utils/CurrencyUtils";
 import DateUtils from "../utils/DateUtils";
+import ConfirmDialog from "./ConfirmDialog";
 
 interface Props {
   expenses: Expense;
@@ -57,6 +58,7 @@ const ExpenseList = ({ expenses }: Props) => {
           </Link>
         ))}
       </div>
+
     </div>
   );
 };

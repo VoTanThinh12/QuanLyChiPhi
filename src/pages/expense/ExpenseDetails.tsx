@@ -1,10 +1,16 @@
-import { Link, useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import CurrencyUtils from "../../utils/CurrencyUtils";
 import DateUtils from "../../utils/DateUtils";
 
 import useExpenseByExpenseId from "../../hooks/useExpenseByExpenseId";
+import ConfirmDialog from "../../components/ConfirmDialog";
+import { useState } from "react";
+import { deleteExpenseByExpenseId } from "../../services/expense-service";
+
 const ExpenseDetails = () => {
   const { expenseId } = useParams<{ expenseId: string }>();
+  const [showDialog, setShowDialog] = useState<boolean>(false);
+  const navigate = useNavigate();
 
   // let { expenseId } = useParams<{ expenseId: string }>();
   // expenseId = undefined;
@@ -12,14 +18,39 @@ const ExpenseDetails = () => {
     return <p className="text-danger">Invalid Expense Id</p>;
   }
 
-  const { expenses, errors, isLoading } = useExpenseByExpenseId(expenseId);
+  const { expenses, errors, isLoading, setLoader, setErrors } =
+    useExpenseByExpenseId(expenseId);
+
+  const handleCancel = () => {
+    console.log(Cancel);
+    setShowDialog(false);
+  };
+  const handleConfirm = () => {
+    setLoader(true);
+    deleteExpenseByExpenseId(expenseId)
+      .then((response) => {
+        if (response && response.status === 204) {
+          navigate("/");
+        }
+      })
+      .catch((error) => setErrors(error.message))
+      .finally(() => {
+        setLoader(false);
+        setShowDialog(false);
+      });
+  };
 
   return (
     <div className="container mt-2">
       {isLoading && <p>Loading....</p>}
       {errors && <p className="text-danger">{errors}</p>}
       <div className="d-flex flex-row-reverse mb-2">
-        <button className="btn btn-sm btn-danger">Delete</button>
+        <button
+          className="btn btn-sm btn-danger"
+          onClick={() => setShowDialog(true)}
+        >
+          Delete
+        </button>
         <button className="btn btn-sm btn-warning mx-2">Edit</button>
         <Link className="btn btn-sm btn-secondary" to="/">
           Back
@@ -59,6 +90,13 @@ const ExpenseDetails = () => {
           </table>
         </div>
       </div>
+      <ConfirmDialog
+        title="Confirm Delete"
+        message="Are you sure want to delete this item?"
+        show={showDialog}
+        onCancel={handleCancel}
+        onConfirm={handleConfirm}
+      />
     </div>
   );
 };
