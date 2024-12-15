@@ -6,6 +6,7 @@ import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 import thinh1.restapi.dto.ExpenseDTO;
 import thinh1.restapi.entity.ExpenseEntity;
+import thinh1.restapi.exceptions.ResourceNotFoundException;
 import thinh1.restapi.reponsitory.ExpenseReponsitory;
 import thinh1.restapi.service.ExpenseService;
 
@@ -32,10 +33,21 @@ public class ExpenseServiceImpl implements ExpenseService {
 
     @Override
     public ExpenseDTO getExpenseByExpenseId(String expenseId) {
-        ExpenseEntity optionalExpense = expenseReponsitory.findByExpenseId(expenseId)
+        ExpenseEntity expenseEntity = getExpenseEntity(expenseId);
+        return mapToExpenseDTO(expenseEntity);
+    }
+
+    private ExpenseEntity getExpenseEntity(String expenseId) {
+         return  expenseReponsitory.findByExpenseId(expenseId)
         .orElseThrow(() -> new RuntimeException("Expense not found for the expense id " + expenseId));
 
-        return mapToExpenseDTO(optionalExpense);
+    }
+
+    @Override
+    public void deleteExpenseByExpenseID(String expenseId) {
+        ExpenseEntity expenseEntity =  getExpenseEntity(expenseId);
+        log.info("Deleting expense {}",expenseEntity);
+        expenseReponsitory.delete(expenseEntity);
     }
 
 

@@ -3,10 +3,8 @@ package thinh1.restapi.controller;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.*;
 import thinh1.restapi.dto.ExpenseDTO;
 import thinh1.restapi.io.ExpenseResponse;
 import thinh1.restapi.reponsitory.ExpenseReponsitory;
@@ -52,7 +50,12 @@ public class ExpenseController {
         return mapToExpenseResponse(expenseDTO);
     }
 
-
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    @DeleteMapping("/expenses/{expenseId}")
+    public void deleteExpenseById(@PathVariable String expenseId) {
+        log.info("API DELETE /expenses/{expenseId} called");
+        expenseService.deleteExpenseByExpenseID(expenseId);
+    }
 
 
 

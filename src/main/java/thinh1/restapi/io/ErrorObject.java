@@ -12,8 +12,8 @@ import java.util.Date;
 @NoArgsConstructor
 @Builder
 public class ErrorObject {
-    private String StatusCode;
-    private String Message;
+    private Integer StatusCode;
+    private String message;
     private Date timestamp;
     private String errorCode;
 }
