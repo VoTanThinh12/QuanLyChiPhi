@@ -18,7 +18,7 @@ const ExpenseDetails = () => {
     return <p className="text-danger">Invalid Expense Id</p>;
   }
 
-  const { expenses, errors, isLoading, setLoader, setErrors } =
+  const { expenses, error, isLoading, setLoader, setErrors } =
     useExpenseByExpenseId(expenseId);
 
   const handleCancel = () => {
@@ -43,7 +43,7 @@ const ExpenseDetails = () => {
   return (
     <div className="container mt-2">
       {isLoading && <p>Loading....</p>}
-      {errors && <p className="text-danger">{errors}</p>}
+      {error && <p className="text-danger">{error}</p>}
       <div className="d-flex flex-row-reverse mb-2">
         <button
           className="btn btn-sm btn-danger"

@@ -4,7 +4,7 @@ import { getExpensesByExpenseId } from "../services/expense-service";
 
 const useExpenseByExpenseId = (expenseId: string) => {
   const [expenses, setExpense] = useState<Expense | undefined>();
-  const [errors, setErrors] = useState<string>("");
+  const [error, setErrors] = useState<string>("");
   const [isLoading, setLoader] = useState<boolean>(false);
 
   useEffect(() => {
@@ -17,7 +17,7 @@ const useExpenseByExpenseId = (expenseId: string) => {
       })
       .finally(() => setLoader(false));
   }, []);
-  return { expenses, errors, isLoading, setLoader, setErrors };
+  return { expenses, error, isLoading, setLoader, setErrors };
 };
 
 export default useExpenseByExpenseId;
