@@ -35,6 +35,8 @@ public class ExpenseEntity {
     @CreationTimestamp
     @Column(updatable=true,nullable=false)
     private Timestamp createdAt;
+
+
     @UpdateTimestamp
     private Timestamp updatedAt;
 }

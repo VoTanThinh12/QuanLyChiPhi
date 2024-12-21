@@ -1,11 +1,15 @@
 package thinh1.restapi.controller;
 
+
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
 import org.springframework.http.HttpStatus;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import thinh1.restapi.dto.ExpenseDTO;
+import thinh1.restapi.io.ExpenseRequest;
 import thinh1.restapi.io.ExpenseResponse;
 import thinh1.restapi.reponsitory.ExpenseReponsitory;
 import thinh1.restapi.service.ExpenseService;
@@ -19,6 +23,8 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 @Slf4j
 @CrossOrigin("*")
+
+
 public class ExpenseController {
 
 
@@ -57,16 +63,26 @@ public class ExpenseController {
         expenseService.deleteExpenseByExpenseID(expenseId);
     }
 
-
-
-
-
-
     /*
      *phuong thuc mapper de chuyen expense dto sang expense response
-     */
+//     */
+    @ResponseStatus(HttpStatus.CREATED)
+    @PostMapping("/expenses")
+    public ExpenseResponse saveExpenseDetails(@Valid @RequestBody ExpenseRequest expenseRequest){
+        log.info("API POST /expenses called{}",expenseRequest);
+        ExpenseDTO expenseDTO = mapToExpenseDTO(expenseRequest);
+        expenseDTO = expenseService.saveExpenseDetails(expenseDTO);
+        log.info("Printing the expense dto {}", expenseDTO);
+        return mapToExpenseResponse(expenseDTO);
+    }
+
+    private ExpenseDTO mapToExpenseDTO( ExpenseRequest expenseRequest) {
+        return modelMapper.map(expenseRequest, ExpenseDTO.class);
+    }
+
 
     private ExpenseResponse mapToExpenseResponse(ExpenseDTO expenseDTO) {
         return modelMapper.map(expenseDTO, ExpenseResponse.class);
     }
+
 }

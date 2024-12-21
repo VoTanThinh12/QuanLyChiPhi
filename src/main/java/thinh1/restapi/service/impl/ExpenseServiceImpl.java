@@ -11,11 +11,13 @@ import thinh1.restapi.reponsitory.ExpenseReponsitory;
 import thinh1.restapi.service.ExpenseService;
 
 import java.util.List;
+import java.util.UUID;
 import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
 @Slf4j
+
 public class ExpenseServiceImpl implements ExpenseService {
 
     private final ExpenseReponsitory expenseReponsitory;
@@ -40,7 +42,6 @@ public class ExpenseServiceImpl implements ExpenseService {
     private ExpenseEntity getExpenseEntity(String expenseId) {
          return  expenseReponsitory.findByExpenseId(expenseId)
         .orElseThrow(() -> new RuntimeException("Expense not found for the expense id " + expenseId));
-
     }
 
     @Override
@@ -48,6 +49,26 @@ public class ExpenseServiceImpl implements ExpenseService {
         ExpenseEntity expenseEntity =  getExpenseEntity(expenseId);
         log.info("Deleting expense {}",expenseEntity);
         expenseReponsitory.delete(expenseEntity);
+    }
+
+//    @Override
+//    public ExpenseDTO saveExpenseDetails(ExpenseDTO expenseDTO) {
+//        ExpenseEntity newExpenseEntity = maptoExpenseEntity(expenseDTO);
+//        newExpenseEntity = setExpenseId(UUID.randomUUID().toString());
+//        newExpenseEntity =  expenseReponsitory.save(newExpenseEntity);
+//        return mapToExpenseDTO(newExpenseEntity);
+//    }
+    @Override
+    public ExpenseDTO saveExpenseDetails(ExpenseDTO expenseDTO) {
+        ExpenseEntity newExpenseEntity = maptoExpenseEntity(expenseDTO);
+        newExpenseEntity.setExpenseId(UUID.randomUUID().toString()); // Cách dùng đúng
+        newExpenseEntity = expenseReponsitory.save(newExpenseEntity);
+        log.info("Printing the new expense entity details {}",newExpenseEntity);
+        return mapToExpenseDTO(newExpenseEntity);
+    }
+
+    private ExpenseEntity maptoExpenseEntity(ExpenseDTO expenseDTO) {
+        return modelMapper.map(expenseDTO, ExpenseEntity.class);
     }
 
 
