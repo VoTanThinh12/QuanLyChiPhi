@@ -1,7 +1,8 @@
 export const expenseCategories = [
-  "Shopping 2", 
+  "Shopping 2",
   "Food3",
   "Transport",
   "Utilities",
+  "Food",
   "Others",
 ];
