@@ -5,4 +5,7 @@ import thinh1.restapi.dto.ProfileDTO;
 
 public interface ProfileService {
     ProfileDTO createProfile(ProfileDTO profileDTO);
+
+
+
 }

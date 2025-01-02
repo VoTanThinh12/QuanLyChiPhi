@@ -23,13 +23,41 @@ import java.util.stream.Collectors;
 @Slf4j
 @RestControllerAdvice
 public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
-
     @ResponseStatus(HttpStatus.NOT_FOUND)
     @ExceptionHandler(ResourceNotFoundException.class)
     public ErrorObject handleResourceNotFoundException(ResourceNotFoundException ex, WebRequest request ) {
+        log.error("Throwing the Exception from GlobalExceptionHandle {}",ex.getMessage());
         return ErrorObject.builder()
                 .errorCode("DATA_NOT_FOUND")
                 .StatusCode(HttpStatus.NOT_FOUND.value())
+                .message(ex.getMessage())
+                .timestamp(new Date())
+                .build();
+
+
+    }
+    @ResponseStatus(HttpStatus.CONFLICT)
+    @ExceptionHandler(ItemExistsException.class)
+    public ErrorObject handleExistsException(ItemExistsException ex, WebRequest request ) {
+        log.error("Throwing the ItemExistsException from GlobalExceptionHandle {}",ex.getMessage());
+        return ErrorObject.builder()
+                .errorCode("DATA_EXISTS")
+                .StatusCode(HttpStatus.CONFLICT.value())
+                .message(ex.getMessage())
+                .timestamp(new Date())
+                .build();
+
+
+    }
+
+
+    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
+    @ExceptionHandler(Exception.class)
+    public ErrorObject handleGeneralException(Exception ex, WebRequest request ) {
+        log.error("Throwing the Exception from ",ex.getMessage());
+        return ErrorObject.builder()
+                .errorCode("UNKNOWN_ERROR")
+                .StatusCode(HttpStatus.INTERNAL_SERVER_ERROR.value())
                 .message(ex.getMessage())
                 .timestamp(new Date())
                 .build();
